@@ -28,6 +28,7 @@ CLASS = {
     9: 'Warlock',
     10: 'Monk',
     11: 'Druid',
+    12: 'Demon Hunter',
 }
 
 QUALITY = {

@@ -48,63 +48,54 @@ class DataTest(unittest.TestCase):
             'powerType': 'focus',
             'mask': 4,
             'id': 3,
-            'name': 'Hunter'
         }, {
             'powerType': 'energy',
             'mask': 8,
             'id': 4,
-            'name': 'Rogue'
         }, {
             'powerType': 'rage',
             'mask': 1,
             'id': 1,
-            'name': 'Warrior'
         }, {
             'powerType': 'mana',
             'mask': 2,
             'id': 2,
-            'name': 'Paladin'
         }, {
             'powerType': 'mana',
             'mask': 64,
             'id': 7,
-            'name': 'Shaman'
         }, {
             'powerType': 'mana',
             'mask': 128,
             'id': 8,
-            'name': 'Mage'
         }, {
             'powerType': 'mana',
             'mask': 16,
             'id': 5,
-            'name': 'Priest'
         }, {
             'powerType': 'runic-power',
             'mask': 32,
             'id': 6,
-            'name': 'Death Knight'
         }, {
             'powerType': 'mana',
             'mask': 1024,
             'id': 11,
-            'name': 'Druid'
         }, {
             'powerType': 'mana',
             'mask': 256,
             'id': 9,
-            'name': 'Warlock'
         }, {
             'powerType': 'energy',
             'mask': 512,
             'id': 10,
-            'name': 'Monk'
         }, {
             'powerType': 'fury',
             'mask': 2048,
             'id': 12,
-            'name': 'Demon Hunter'
         }]
+
+        for i in range(len(classes_)):
+            classes_[i]['name'] = battlenet.CLASS[classes_[i]['id']]
 
         classes_.sort(key=itemgetter('id'))
         classes.sort(key=itemgetter('id'))
