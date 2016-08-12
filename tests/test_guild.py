@@ -22,10 +22,11 @@ class GuildTest(unittest.TestCase):
     _guild_name = 'Paragon'
 
     _guilds = (
-        ##(battlenet.UNITED_STATES, 'illidan', 'Blood Legion'),
-        (battlenet.EUROPE, "Lightning's Blade", 'DREAM Paragon'),
-        ##(battlenet.KOREA, '카르가스', '즐거운공격대'),
-        ##(battlenet.TAIWAN, '水晶之刺', 'Stars'),
+        (battlenet.UNITED_STATES, 'illidan', 'Blood Legion'),
+        (battlenet.EUROPE, "Lightning's Blade", 'Paragon'),
+        (battlenet.KOREA, 'Azshara', 'AFK R'),   # realm in english...
+        (battlenet.KOREA, '아즈샤라', 'AFK R'),  # same realm in kr
+        (battlenet.TAIWAN, '水晶之刺', 'Stars'),
         ##(battlenet.CHINA, '灰谷', '星之轨迹'),
     )
 
@@ -49,7 +50,7 @@ class GuildTest(unittest.TestCase):
 
         character = guild.get_leader()
 
-        self.assertEqual(character.name, 'Sejta')
+        self.assertEqual(character.name, 'Alsham')
 
     def test_lazyload_member_character(self):
         guild = Guild(self._guild_region, self._guild_realm_name, self._guild_name)
@@ -58,7 +59,7 @@ class GuildTest(unittest.TestCase):
 
         character = guild.get_leader()
 
-        self.assertRegexpMatches(character.get_full_class_name(), r'^Balance Druid$')
+        self.assertRegexpMatches(character.get_full_class_name(), r'^Restoration Shaman$')
 
     def test_achievements(self):
         guild = Guild(self._guild_region, self._guild_realm_name, self._guild_name, fields=[Guild.ACHIEVEMENTS])
