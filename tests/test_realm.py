@@ -66,6 +66,7 @@ class RealmTest(unittest.TestCase):
 
         self.assertGreater(len(realms), 0)
 
+    @unittest.skip('China wow api no more available')
     def test_all_realms_china(self):
         realms = self.connection.get_all_realms(battlenet.CHINA)
 
@@ -106,9 +107,11 @@ class RealmTest(unittest.TestCase):
     def test_realm_taiwan_en(self):
         self._realm_for(battlenet.TAIWAN, 'Dragonmaw', useLocaleEn=True)
 
+    @unittest.skip('China wow api no more available')
     def test_realm_china(self):
         self._realm_for(battlenet.CHINA, '灰谷')
 
+    @unittest.skip('China wow api no more available')
     def test_realm_china_en(self):
         self._realm_for(battlenet.CHINA, 'Abbendis', useLocaleEn=True)
 
