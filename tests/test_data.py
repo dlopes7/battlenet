@@ -99,6 +99,11 @@ class DataTest(unittest.TestCase):
             'mask': 512,
             'id': 10,
             'name': 'Monk'
+        }, {
+            'powerType': 'fury',
+            'mask': 2048,
+            'id': 12,
+            'name': 'Demon Hunter'
         }]
 
         classes_.sort(key=itemgetter('id'))
@@ -110,7 +115,7 @@ class DataTest(unittest.TestCase):
 
         for class_ in classes:
             self.assertIn(class_.power_type,
-                ['mana', 'energy', 'runic-power', 'focus', 'rage'])
+                ['mana', 'energy', 'runic-power', 'focus', 'rage', 'fury'])
 
     def test_items(self):
         item = self.connection.get_item(battlenet.UNITED_STATES, 60249)
