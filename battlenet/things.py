@@ -384,16 +384,22 @@ class Stats(Thing):
 
         self.agility = data['agi']
         self.armor = data['armor']
-        self.attack_power = data['attackPower']
+        self.avoidance_rating = data['avoidanceRating']
+        self.avoidance_ratingBonus = data['avoidanceRatingBonus']
         self.block = data['block']
         self.block_rating = data['blockRating']
         self.crit = data['crit']
         self.crit_rating = data['critRating']
         self.dodge = data['dodge']
         self.dodge_rating = data['dodgeRating']
+        self.haste = data['haste']
         self.haste_rating = data['hasteRating']
+        self.haste_rating_percent = data['hasteRatingPercent']
         self.health = data['health']
         self.intellect = data['int']
+        self.leech = data['leech']
+        self.leech_rating = data['leechRating']
+        self.leech_rating_bonus = data['leechRatingBonus']
         self.main_hand_damage_max = data['mainHandDmgMax']
         self.main_hand_damage_min = data['mainHandDmgMin']
         self.main_hand_dps = data['mainHandDps']
@@ -410,31 +416,21 @@ class Stats(Thing):
         self.parry_rating = data['parryRating']
         self.power = data['power']
         self.power_type = data['powerType']
-        self.ranged_attack_power = data['rangedAttackPower']
-        self.ranged_crit = data['rangedCrit']
-        self.ranged_crit_rating = data['rangedCritRating']
         self.ranged_damage_max = data['rangedDmgMax']
         self.ranged_damage_min = data['rangedDmgMin']
         self.ranged_dps = data['rangedDps']
         self.ranged_speed = data['rangedSpeed']
-        self.resilience = data['pvpResilience']
-        self.resilience_rating = data['pvpResilienceRating']
+        self.speed_rating = data['speedRating']
+        self.speed_rating_bonus = data['speedRatingBonus']
         self.spell_crit = data['spellCrit']
         self.spell_crit_rating = data['spellCritRating']
         self.spell_penetration = data['spellPen']
-        self.spell_power = data['spellPower']
-        self.spirit = data['spr']
         self.stamina = data['sta']
         self.strength = data['str']
-
-    @property
-    def haste(self):
-        return self._convert_rating_to_percent({
-            60: 10,
-            70: 15.77,
-            80: 32.79,
-            85: 128.05701
-        }, self.haste_rating)
+        self.versatility = data ['versatility']
+        self.versatility_damage_done_bonus = data ['versatilityDamageDoneBonus']
+        self.versatility_damage_taken_bonus = data ['versatilityDamageTakenBonus']
+        self.versatility_healing_done_bonus = data ['versatilityHealingDoneBonus']
 
     def _convert_rating_to_percent(self, ratios, rating):
         percent = None
