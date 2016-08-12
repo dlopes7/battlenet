@@ -67,16 +67,6 @@ class GuildTest(unittest.TestCase):
             self.assertIsInstance(id_, int)
             self.assertIsInstance(completed_ts, datetime.datetime)
 
-    def test_perks(self):
-        guild = Guild(self._guild_region, self._guild_realm_name, self._guild_name)
-
-        self.assertGreater(len(guild.perks), 1)
-
-    def test_rewards(self):
-        guild = Guild(self._guild_region, self._guild_realm_name, self._guild_name)
-
-        self.assertGreater(len(guild.rewards), 1)
-
     def test_guilds_worldwide(self):
         for region, realm, guild_name in self._guilds:
             guild = Guild(region, realm, guild_name)

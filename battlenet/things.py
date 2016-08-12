@@ -693,15 +693,6 @@ class Guild(LazyThing):
         self._delete_property_fields()
 
     @property
-    def perks(self):
-        return [perk for perk in self.connection.get_guild_perks(self.region) if perk.guild_level <= self.level]
-
-    @property
-    def rewards(self):
-        return [reward for reward in self.connection.get_guild_rewards(self.region)
-                if reward.min_guild_level <= self.level]
-
-    @property
     def achievements(self):
         if self._refresh_if_not_present(Guild.ACHIEVEMENTS):
             self._achievements = {}
