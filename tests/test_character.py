@@ -23,18 +23,18 @@ class CharacterTest(unittest.TestCase):
     _realm_name = "Lightning's Blade"
     _guild_name = 'Paragon'
     _faction = Character.HORDE
-    _race = Character.TROLL
+    _race = Character.TAUREN
     _class = Character.DRUID
     _level = 90
     _gender = Character.MALE
     _professions = (Character.LEATHERWORKING, Character.BLACKSMITHING)
     _professions_secondary = (Character.ARCHAEOLOGY, Character.COOKING, Character.FIRST_AID, Character.FISHING)
-    _appearance_face = 0
-    _appearance_feature = 3
+    _appearance_face = 1
+    _appearance_feature = 6
     _appearance_hair_color = 1
     _appearance_show_cloak = False
     _appearance_show_helm = True
-    _appearance_hair = 3
+    _appearance_hair = 10
 
     _character_name_unicode = 'Luný'
     _character_name_hunter = 'Devai'
@@ -149,12 +149,12 @@ class CharacterTest(unittest.TestCase):
 
     def test_talents(self):
         character = Character(self._region, self._realm_name, self._character_name, fields=[Character.TALENTS])
-        self.assertEqual(len(character.talents), 2)
+        self.assertEqual(len(character.talents), 4)
 
     def test_talents_worldwide(self):
         for region, realm, character_name in self._characters:
             character = Character(region, realm, character_name, fields=[Character.TALENTS])
-            self.assertEqual(len(character.talents), 2)
+            self.assertEqual(len(character.talents), 4)
 
     def test_characters_worldwide(self):
         for region, realm, character_name in self._characters:
