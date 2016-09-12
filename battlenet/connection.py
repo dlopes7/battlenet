@@ -1,19 +1,14 @@
 import logging
-import urllib2
+import requests
 import base64
 import hmac
 import hashlib
 import time
-import urlparse
+
 from .things import Character, Realm, Guild, Reward, Perk, Class, Race
 from .exceptions import APIError, CharacterNotFound, GuildNotFound, RealmNotFound
-from .utils import quote, normalize
 
-try:
-    import simplejson as json
-except ImportError:
-    import json
-
+import json
 
 __all__ = ['Connection']
 
@@ -58,10 +53,11 @@ class Connection(object):
     def setup(**defaults):
         Connection.defaults.update(defaults)
 
+
     def sign_request(self, method, now, url, private_key):
         string_to_sign = '%s\n%s\n%s\n' % (method, now, url)
-        hash = hmac.new(private_key, string_to_sign, hashlib.sha1).digest()
-        return base64.encodestring(hash).rstrip()
+        _hash = hmac.new(private_key.encode(), string_to_sign.encode(), hashlib.sha1).digest()
+        return base64.encodestring(_hash).rstrip()
 
     def make_request(self, region, path, params=None, cache=False):
         params = params or {}
@@ -69,7 +65,7 @@ class Connection(object):
 
         now = time.gmtime()
         date = '%s, %2d %s %d %2d:%02d:%02d GMT' % (DAYS[now[6]], now[2],
-            MONTHS[now[1]], now[0], now[3], now[4], now[5])
+                                                    MONTHS[now[1]], now[0], now[3], now[4], now[5])
 
         headers = {
             'Date': date
@@ -82,13 +78,13 @@ class Connection(object):
             'apikey': self.api_key,
             'params': '&'.join('='.join(
                 (k, ','.join(v) if isinstance(v, (set, list)) else v))
-                for k, v in params.items() if v)
+                               for k, v in params.items() if v)
         }
 
         if cache and url in self._cache:
             return self._cache[url]
 
-        uri = urlparse.urlparse(url)
+        uri = requests.utils.urlparse(url)
 
         if self.public_key:
             signature = self.sign_request('GET', date, uri.path, self.private_key)
@@ -96,15 +92,14 @@ class Connection(object):
 
         logger.debug('Battle.net => ' + url)
 
-        request = urllib2.Request(url, None, headers)
-
         try:
-            response = urllib2.urlopen(request)
-        except urllib2.URLError, e:
+            response = requests.get(url, headers=headers)
+        except Exception as e:
             raise APIError(str(e))
 
         try:
-            data = json.loads(response.read())
+            data = response.json()
+            print(data)
         except json.JSONDecodeError:
             raise APIError('Non-JSON Response')
         else:
@@ -117,8 +112,8 @@ class Connection(object):
         return data
 
     def get_character(self, region, realm, name, fields=None, raw=False):
-        name = quote(name.lower())
-        realm = quote(realm.lower()).replace("%20", '-')
+        name = name.lower()
+        realm = realm.lower().replace("%20", '-')
 
         try:
             data = self.make_request(region, '/character/%s/%s' % (realm, name), {'fields': fields})
@@ -133,8 +128,8 @@ class Connection(object):
             raise CharacterNotFound
 
     def get_guild(self, region, realm, name, fields=None, raw=False):
-        name = quote(name.lower())
-        realm = quote(realm.lower()).replace("%20", '-')
+        name = name.lower()
+        realm = realm.lower().replace("%20", '-')
 
         try:
             data = self.make_request(region, '/guild/%s/%s' % (realm, name), {'fields': fields})
@@ -163,8 +158,8 @@ class Connection(object):
         return [Realm(region, data=realm, connection=self) for realm in data['realms']]
 
     def get_realm(self, region, name, raw=False):
-        data = self.make_request(region, '/realm/status', {'realm': quote(name.lower())})
-        data = [d for d in data['realms'] if normalize(d['name']).lower() == normalize(name).lower()]
+        data = self.make_request(region, '/realm/status', {'realm': name.lower()})
+        data = [d for d in data['realms'] if d['name'].lower() == name.lower()]
 
         if len(data) != 1:
             raise RealmNotFound

@@ -42,8 +42,7 @@ from .things import Class
 from .things import Race
 from .things import Raid
 
-from .utils import normalize
-from .utils import quote
+
 from .utils import make_icon_url
 from .utils import make_connection
 from .utils import api_key

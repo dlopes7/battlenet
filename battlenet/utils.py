@@ -5,19 +5,6 @@ import os
 def api_key():
     return os.environ.get('BNET_API_KEY')
 
-def normalize(name):
-    if not isinstance(name, unicode):
-        name = name.decode('utf-8')
-
-    return unicodedata.normalize('NFKC', name.replace("'", '')).encode('utf-8')
-
-
-def quote(name):
-    if isinstance(name, unicode):
-        name = normalize(name)
-
-    return urllib.quote(name)
-
 
 def make_icon_url(region, icon, size='large'):
     if not icon:

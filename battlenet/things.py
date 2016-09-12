@@ -2,7 +2,7 @@ import operator
 import collections
 import datetime
 from .enums import RACE, CLASS, QUALITY, RACE_TO_FACTION, RAIDS, EXPANSION
-from .utils import make_icon_url, normalize, make_connection
+from .utils import make_icon_url, make_connection
 
 try:
     import simplejson as json
@@ -142,10 +142,13 @@ class Character(LazyThing):
         self._populate_data(data)
 
     def __str__(self):
-        return self.name
+        return '{name} - {race} {class_} ({ilvl})'.format(name=self.name,
+                                                          race=self.race,
+                                                          class_=self.class_,
+                                                          ilvl=self.race)
 
     def __repr__(self):
-        return '<%s: %s@%s>' % (self.__class__.__name__, self.name, normalize(self._data['realm']))
+        return '<%s: %s@%s>' % (self.__class__.__name__, self.name, self._data['realm'])
 
     def __eq__(self, other):
         if not isinstance(other, Character):
@@ -158,7 +161,7 @@ class Character(LazyThing):
     def _populate_data(self, data):
         self._data = data
 
-        self.name = normalize(data['name'])
+        self.name = data['name']
         self.level = data['level']
         self.class_ = data['class']
         self.race = data['race']
@@ -304,7 +307,7 @@ class Character(LazyThing):
         self._delete_property_fields()
 
     def get_realm_name(self):
-        return normalize(self._data['realm'])
+        return self._data['realm']
 
     def get_class_name(self):
         return CLASS.get(self.class_, 'Unknown')
@@ -675,7 +678,7 @@ class Guild(LazyThing):
 
         self._data = data
 
-        self.name = normalize(data['name'])
+        self.name = data['name']
         self.emblem = Emblem(data['emblem']) if 'emblem' in data else None
         self.achievement_points = data['achievementPoints']
         self.faction = ({
@@ -742,7 +745,7 @@ class Guild(LazyThing):
                 return member['character']
 
     def get_realm_name(self):
-        return normalize(self._data['realm'])
+        return self._data['realm']
 
 
 class Emblem(Thing):
@@ -838,7 +841,7 @@ class Realm(Thing):
     def _populate_data(self, data):
         self._data = data
 
-        self.name = normalize(data['name'])
+        self.name = data['name']
         self.slug = data['slug']
         self.status = data['status']
         self.queue = data['queue']
