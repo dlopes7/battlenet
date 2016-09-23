@@ -885,6 +885,11 @@ class EquippedItem(Thing):
             if key.startswith('gem'):
                 self.gems[int(key[3:])] = value
 
+        self.artifactId = data['artifactId']
+        self.artifactAppearanceId = data['artifactAppearanceId']
+        self.artifactTraits = data['artifactTraits']
+        self.relics = data['relics']
+
     def __str__(self):
         return self.name
 
