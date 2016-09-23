@@ -112,5 +112,9 @@ class DataTest(unittest.TestCase):
         item = self.connection.get_item(battlenet.UNITED_STATES, 60249)
         # TODO
 
+    def test_spell(self):
+        spell = self.connection.get_spell(battlenet.UNITED_STATES, 215183)
+        # TODO
+
 if __name__ == '__main__':
     unittest.main()

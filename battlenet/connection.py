@@ -218,3 +218,12 @@ class Connection(object):
         if 'name' not in data:
             return self.get_item(region, item_id, raw=raw, context=data['availableContexts'][0])
         return data
+
+    def get_spell(self, region, spell_id, raw=False, context=None):
+        url = '/spell/%d' % spell_id
+        if context:
+            url = '%s/%s' % (url, context)
+        data = self.make_request(region, url)
+        if 'name' not in data:
+            return self.get_spell(region, spell_id, raw=raw, context=data['availableContexts'][0])
+        return data
